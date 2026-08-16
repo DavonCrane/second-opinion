@@ -2,6 +2,9 @@
 .env
 *.key
 
+# personal study notes — never pushed
+NOTES.md
+
 # python
 __pycache__/
 *.py[cod]

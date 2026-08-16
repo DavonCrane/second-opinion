@@ -57,7 +57,7 @@ Prerequisites: **Python 3.12** (3.10+ works; 3.14 is too new for some deps), **G
 
 ```powershell
 # 1. get the code
-git clone https://github.com/<your-username>/second-opinion.git
+git clone https://github.com/DavonCrane/second-opinion.git
 cd second-opinion
 
 # 2. create and activate a virtual environment (Python 3.12)
