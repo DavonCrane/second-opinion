@@ -1,1 +1,0 @@
-I can't tell you whether to buy or sell — that depends on your goals, horizon, and risk tolerance, and The Second Opinion is a research tool, not an adviser. What I can do is lay out the evidence: run a full report on the ticker (bull case, bear case, sourced metrics, scenario valuation) or ask a focused question like "what are the biggest risks in the latest 10-K?"
