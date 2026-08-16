@@ -5,7 +5,8 @@
   "mode": "full_report",
   "contains": [
    "no positive trailing EPS"
-  ]
+  ],
+  "scenarios": false
  },
  "notes": "Scenario valuation must decline politely (live only)"
 }

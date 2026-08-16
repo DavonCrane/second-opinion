@@ -33,7 +33,7 @@ class NewsAgent(Agent):
 Recent headlines (each tagged with a source id):
 {chr(10).join(lines)}
 
-Select the 3-5 developments that a fundamentals-driven investor should actually know about (earnings, guidance, product/launch timing, major customer/competitor moves, regulatory/legal, capital allocation). Ignore clickbait, price-move-only stories, and duplicates. For each, write one factual sentence with the date and cite its source id. Also flag anything that materially strengthens the bull case or the bear case.
+Select up to 3-5 developments that a fundamentals-driven investor should actually know about (earnings, guidance, product/launch timing, major customer/competitor moves, regulatory/legal, capital allocation). ONLY include items directly about this company or a named customer/supplier/competitor with a concrete link to it. Ignore clickbait, listicles, generic market wraps, price-move-only stories, stories about other companies with no stated connection, and duplicates. If fewer than 2 headlines qualify, return only those (or none) and say so — do NOT stretch to fill the list. For each, write one factual sentence with the date and cite its source id. Also flag anything that materially strengthens the bull case or the bear case.
 JSON: {{"findings": [{{"claim": "...", "sources": [id]}}], "bull_support": ["..."], "bear_support": ["..."]}}"""
         out = self.llm.complete_json(prompt, system=ANALYST_SYSTEM, tier="strong", max_tokens=1200)
         n = self._add_claims(ws, out.get("findings", []), [ws.sources[-1]["id"]])

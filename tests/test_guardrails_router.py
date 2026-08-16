@@ -57,3 +57,13 @@ def test_router_llm_fallback_and_json_parsing():
     r = route("Can you tell me how Apple's margins have been trending lately", llm)
     assert r.mode == "focused_question" and r.subject == "AAPL" and r.via == "llm"
     assert parse_json('Sure! {"a": 1} thanks') == {"a": 1}
+
+
+def test_guard_allows_cautionary_guaranteed_and_normalizes_verbose_citations():
+    ok_md = "There is no guaranteed follow-through after index inclusion [1].\n" + g.DISCLAIMER
+    assert g.output_guard(ok_md, n_sources=1).ok
+    bad_md = "Returns are guaranteed to be positive [1].\n" + g.DISCLAIMER
+    assert not g.output_guard(bad_md, n_sources=1).ok
+    verbose = "Debt is $12.8B [source 1]. Cash is $53B [Source 2]. Both [1, 2] agree.\n" + g.DISCLAIMER
+    assert g.normalize_citations(verbose).count("[1]") == 2 and "[2]" in g.normalize_citations(verbose)
+    assert g.output_guard(verbose, n_sources=2).details["coverage"] == 1.0

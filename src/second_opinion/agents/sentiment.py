@@ -35,14 +35,15 @@ class SentimentAgent(Agent):
         upside = None
         if an.get("target_mean") and price:
             upside = round((an["target_mean"] - price) / price * 100, 1)
+        rnd = lambda v: round(v, 2) if isinstance(v, (int, float)) else v
         analyst = {"score_0_10": score, "n_analysts": n or an.get("n_analysts"), "counts": counts or None,
-                   "recommendation": an.get("recommendation"), "target_low": an.get("target_low"),
-                   "target_mean": an.get("target_mean"), "target_high": an.get("target_high"), "target_upside_pct": upside}
+                   "recommendation": an.get("recommendation"), "target_low": rnd(an.get("target_low")),
+                   "target_mean": rnd(an.get("target_mean")), "target_high": rnd(an.get("target_high")), "target_upside_pct": upside}
         ws.facts["analyst"] = analyst
         if score is not None:
             ws.add_finding(self.name, self.section,
                            f"Wall Street consensus is {an.get('recommendation') or 'n/a'} ({score}/10 bullishness across "
-                           f"{n or an.get('n_analysts') or '?'} analysts); mean 12-month target ${an.get('target_mean')} "
+                           f"{n or an.get('n_analysts') or '?'} analysts); mean 12-month target ${rnd(an.get('target_mean'))} "
                            f"({upside:+.1f}% vs current price)" if upside is not None else
                            f"Wall Street consensus is {an.get('recommendation') or 'n/a'} ({score}/10 bullishness).", s_an)
         else:

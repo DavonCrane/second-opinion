@@ -160,7 +160,7 @@ Return ONE flat JSON object with EXACTLY these eight top-level keys and no other
             row("Free cash flow", f"{fm(m.get('free_cash_flow'))}" + (f" ({fp(m.get('fcf_growth_pct'))} y/y)" if m.get('fcf_growth_pct') is not None else ""), fin_src),
             row("Total debt / net cash (cash + ST investments)", f"{fm(m.get('total_debt'))} / {fm(m.get('net_cash'))}", fin_src),
             row("Debt-to-equity · interest coverage", f"{m.get('debt_to_equity') if m.get('debt_to_equity') is None else round(m['debt_to_equity'],2)} · {m.get('interest_coverage') if m.get('interest_coverage') is None else str(round(m['interest_coverage'],1))+'×'}", fin_src),
-            row("P/E (trailing / forward)", f"{m.get('trailing_pe') if m.get('trailing_pe') is None else round(m['trailing_pe'],1)}× / {m.get('forward_pe') if m.get('forward_pe') is None else round(m['forward_pe'],1)}×", fin_src),
+            row("P/E (trailing / forward)", f"{'n/a' if m.get('trailing_pe') is None else str(round(m['trailing_pe'],1))+'×'} / {'n/a' if m.get('forward_pe') is None else str(round(m['forward_pe'],1))+'×'}", fin_src),
         ]
         if an.get("score_0_10") is not None:
             tgt = f" · target ${an.get('target_mean'):.2f} ({an['target_upside_pct']:+.0f}%)" if an.get("target_upside_pct") is not None else ""

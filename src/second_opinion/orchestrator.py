@@ -100,7 +100,7 @@ class Orchestrator:
             self._note(ws, "[orchestrator] critic DISABLED (ablation mode)")
 
         # final guardrails
-        draft = guardrails.ensure_disclaimer(draft)
+        draft = guardrails.ensure_disclaimer(guardrails.normalize_citations(draft))
         og = guardrails.output_guard(draft, len(ws.sources))
         ws.facts["output_guard"] = og.details | {"ok": og.ok, "reason": og.reason}
         self._note(ws, f"[guardrails] citation coverage {og.details['coverage']:.0%} · disclaimer {'ok' if og.details['has_disclaimer'] else 'MISSING'}"
@@ -134,8 +134,8 @@ Profile & key numbers [source {s_fin}]: price ${snap.get('price')}, trailing P/E
 10-K passages:
 {chr(10).join(passages) if passages else '(none available)'}
 
-Answer in <=180 words. Every factual sentence ends with [n] citations to the sources above. If the evidence doesn't answer the question, say what's missing. No advice."""
-        answer = self.llm.complete(prompt, system="You are a careful equity research analyst. Cite every fact. Never give buy/sell advice.", tier="strong", max_tokens=500)
+Answer in <=180 words. Every factual sentence ends with citations in EXACTLY the form [n] (e.g. [1] or [1][3]) — never "[source 1]". If the evidence doesn't answer the question, say what's missing. Finish your last sentence. No advice."""
+        answer = guardrails.normalize_citations(self.llm.complete(prompt, system="You are a careful equity research analyst. Cite every fact. Never give buy/sell advice.", tier="strong", max_tokens=1000))
         ws.report_md = f"**{ws.ticker} — {question}**\n\n{answer}\n\n**Sources**\n{ws.sources_text()}\n\n{guardrails.DISCLAIMER}\n"
         og = guardrails.output_guard(ws.report_md, len(ws.sources), min_coverage=0.8)
         ws.facts["output_guard"] = og.details | {"ok": og.ok}

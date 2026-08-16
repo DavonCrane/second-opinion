@@ -4,5 +4,5 @@
  "expect": {
   "mode": "full_report"
  },
- "notes": "Thin filing history / possibly no positive EPS \u2192 scenario section must degrade gracefully (live only)"
+ "notes": "Recent IPO (2024): thin filing history; if no positive EPS the scenario section must degrade gracefully (RDDT turned profitable by 2026, so this now exercises a short-history full path)"
 }
