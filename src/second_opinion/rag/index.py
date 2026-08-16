@@ -21,13 +21,16 @@ CHUNK_WORDS = 220
 CHUNK_OVERLAP = 40
 
 
-def chunk_text(text: str, item: str) -> list[dict[str, Any]]:
+def chunk_text(text: str, item: str, doc_key: str = "") -> list[dict[str, Any]]:
+    """Chunk ids are namespaced by doc_key (filing period + content hash) so two different filings — or a fixture
+    and a real filing — can never collide in the vector store."""
     words = re.sub(r"\s+", " ", text).strip().split(" ")
+    prefix = f"{doc_key}|" if doc_key else ""
     chunks, i, n = [], 0, 0
     while i < len(words):
         piece = " ".join(words[i:i + CHUNK_WORDS])
         if len(piece) > 80:
-            chunks.append({"id": f"{item}#{n}", "item": item, "chunk_no": n, "text": piece})
+            chunks.append({"id": f"{prefix}{item}#{n}", "item": item, "chunk_no": n, "text": piece, "doc_key": doc_key})
             n += 1
         i += CHUNK_WORDS - CHUNK_OVERLAP
     return chunks
@@ -49,11 +52,13 @@ class _TfidfBackend:
             self.df.update(set(toks))
             self.docs.append(c)
 
-    def query(self, q: str, k: int) -> list[dict[str, Any]]:
+    def query(self, q: str, k: int, doc_key: str = "") -> list[dict[str, Any]]:
         qt = Counter(self._tok(q))
         N = len(self.docs) or 1
         scored = []
         for d in self.docs:
+            if doc_key and d.get("doc_key") != doc_key:
+                continue
             s = 0.0
             for t, qc in qt.items():
                 if t in d["_tf"]:
@@ -80,12 +85,13 @@ class _ChromaBackend:
         new = [c for c in chunks if c["id"] not in existing]
         if new:
             self.col.add(ids=[c["id"] for c in new], documents=[c["text"] for c in new],
-                         metadatas=[{"item": c["item"], "chunk_no": c["chunk_no"]} for c in new])
+                         metadatas=[{"item": c["item"], "chunk_no": c["chunk_no"], "doc_key": c.get("doc_key", "")} for c in new])
 
-    def query(self, q: str, k: int) -> list[dict[str, Any]]:
+    def query(self, q: str, k: int, doc_key: str = "") -> list[dict[str, Any]]:
         if self.col.count() == 0:
             return []
-        res = self.col.query(query_texts=[q], n_results=min(k, self.col.count()))
+        kw = {"where": {"doc_key": doc_key}} if doc_key else {}
+        res = self.col.query(query_texts=[q], n_results=min(k, self.col.count()), **kw)
         out = []
         for i, doc in enumerate(res["documents"][0]):
             meta = res["metadatas"][0][i]
@@ -115,16 +121,22 @@ class FilingIndex:
         self.meta: dict[str, Any] = {}
 
     def ingest(self, filing: dict[str, Any]) -> int:
+        import hashlib
         self.meta = {k: filing.get(k) for k in ("form", "filing_date", "period")}
+        sections = filing.get("sections") or {}
+        digest = hashlib.sha1("".join(sections.get(k, "")[:2000] for k in sorted(sections)).encode()).hexdigest()[:8]
+        doc_key = f"{filing.get('period') or 'na'}-{digest}"
+        self.doc_key = doc_key
         chunks: list[dict[str, Any]] = []
-        for item, text in (filing.get("sections") or {}).items():
-            chunks.extend(chunk_text(text, item))
+        for item, text in sections.items():
+            chunks.extend(chunk_text(text, item, doc_key))
         self._b.add(chunks)
         self.n_chunks += len(chunks)
         return len(chunks)
 
     def retrieve(self, query: str, k: int = 5) -> list[dict[str, Any]]:
-        return self._b.query(query, k)
+        """Retrieve only from the currently ingested filing (doc_key), never from stale/other documents."""
+        return self._b.query(query, k, getattr(self, "doc_key", ""))
 
     def citation_label(self, chunk: dict[str, Any]) -> str:
         fd = self.meta.get("filing_date") or ""

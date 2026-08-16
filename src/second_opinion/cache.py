@@ -34,13 +34,17 @@ def _paths(namespace: str, key: str) -> tuple[Path, Path]:
 
 
 def read(namespace: str, key: str, max_age_s: float | None = None) -> Any | None:
-    """Return cached payload or None. Fixtures never expire; runtime cache honours max_age_s."""
+    """Return cached payload or None. Runtime cache honours max_age_s.
+
+    Fixtures (illustrative data) are consulted ONLY in offline mode — when online, live data must never be
+    shadowed by fixture data.
+    """
     runtime, fixture = _paths(namespace, key)
     if runtime.exists():
         doc = json.loads(runtime.read_text(encoding="utf-8"))
         if max_age_s is None or (time.time() - doc.get("_ts", 0)) <= max_age_s:
             return doc["payload"]
-    if fixture.exists():
+    if settings.offline and fixture.exists():
         return json.loads(fixture.read_text(encoding="utf-8"))["payload"]
     return None
 

@@ -57,12 +57,13 @@ class LLM:
         self.usage = Usage()
 
     def complete(self, prompt: str, *, system: str = "", tier: str = "strong",
-                 max_tokens: int = 2000, temperature: float = 0.2, retries: int = 3) -> str:
+                 max_tokens: int = 2000, retries: int = 3, **_ignored) -> str:
+        # Note: `temperature` is deliberately NOT sent — Claude 5-generation models reject it (400 error).
         model = settings.model_strong if tier == "strong" else settings.model_fast
         last_err: Exception | None = None
         for attempt in range(retries):
             try:
-                kwargs: dict[str, Any] = dict(model=model, max_tokens=max_tokens, temperature=temperature,
+                kwargs: dict[str, Any] = dict(model=model, max_tokens=max_tokens,
                                               messages=[{"role": "user", "content": prompt}])
                 if system:
                     kwargs["system"] = system
@@ -76,21 +77,37 @@ class LLM:
         raise RuntimeError(f"LLM call failed after {retries} attempts: {last_err}") from last_err
 
     def complete_json(self, prompt: str, **kw) -> dict[str, Any]:
-        """Ask for a JSON object and parse it robustly (tolerates ```json fences and preamble)."""
-        text = self.complete(prompt + "\n\nRespond with a single valid JSON object and nothing else.", **kw)
-        return parse_json(text)
+        """Ask for a JSON object and parse it robustly. If the model's JSON is malformed (unescaped quotes,
+        trailing commas, truncated), ask the FAST model to repair it once before giving up."""
+        text = self.complete(prompt + "\n\nRespond with a single valid JSON object and nothing else. "
+                             "Escape any double quotes inside strings.", **kw)
+        try:
+            return parse_json(text)
+        except json.JSONDecodeError:
+            fixed = self.complete(
+                "The following was supposed to be a single valid JSON object but is malformed. Return the corrected "
+                "JSON object only — same content, valid syntax (escape inner quotes, remove trailing commas, close "
+                "any unclosed brackets):\n\n" + text[:12000], tier="fast", max_tokens=kw.get("max_tokens", 2000))
+            return parse_json(fixed)
 
 
 def parse_json(text: str) -> dict[str, Any]:
     text = text.strip()
-    fence = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", text, re.S)
+    fence = re.search(r"```(?:json)?\s*(\{.*\})\s*```", text, re.S)
     if fence:
         text = fence.group(1)
     else:
         start, end = text.find("{"), text.rfind("}")
         if start != -1 and end != -1:
             text = text[start:end + 1]
-    return json.loads(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # cheap repairs: trailing commas, control characters, smart quotes
+        repaired = re.sub(r",\s*([}\]])", r"\1", text)
+        repaired = re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", "", repaired)
+        repaired = repaired.replace("\u201c", '\\"').replace("\u201d", '\\"')
+        return json.loads(repaired)
 
 
 class FakeLLM:
