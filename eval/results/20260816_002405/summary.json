@@ -1,0 +1,154 @@
+{
+ "stamp": "20260816_002405",
+ "critic_enabled": true,
+ "n_runs": 6,
+ "task_success_rate": 1.0,
+ "mean_citation_coverage": 0.954,
+ "mean_cost_usd": 0.0353,
+ "weight_stability_maxstd": null,
+ "results": [
+  {
+   "id": "NVDA_by_name",
+   "query": "nvidia",
+   "mode": "full_report",
+   "latency_s": 5.8,
+   "cost_usd": 0.0337,
+   "llm_calls": 11,
+   "errors": [],
+   "critic_rounds": 2,
+   "critic_verdicts": [
+    "REJECT",
+    "APPROVE"
+   ],
+   "citation_coverage": 0.938,
+   "checks": {
+    "mode": true,
+    "sections_complete": true,
+    "guard_ok": true,
+    "has_scenarios": true,
+    "bear_case_3": true
+   },
+   "task_success": true,
+   "weights": {
+    "bear": 0.3,
+    "base": 0.5,
+    "bull": 0.2
+   },
+   "claude_view": 155.16,
+   "rep": 0
+  },
+  {
+   "id": "NVDA_full",
+   "query": "NVDA",
+   "mode": "full_report",
+   "latency_s": 0.3,
+   "cost_usd": 0.0346,
+   "llm_calls": 11,
+   "errors": [],
+   "critic_rounds": 2,
+   "critic_verdicts": [
+    "REJECT",
+    "APPROVE"
+   ],
+   "citation_coverage": 0.938,
+   "checks": {
+    "mode": true,
+    "sections_complete": true,
+    "guard_ok": true,
+    "has_scenarios": true,
+    "bear_case_3": true,
+    "contains:Bull case": true,
+    "contains:Bear case": true,
+    "contains:Claude's 12-mo view": true
+   },
+   "task_success": true,
+   "weights": {
+    "bear": 0.3,
+    "base": 0.5,
+    "bull": 0.2
+   },
+   "claude_view": 155.16,
+   "rep": 0
+  },
+  {
+   "id": "advice_refused",
+   "query": "Should I buy NVDA?",
+   "mode": "refused",
+   "latency_s": 0.0,
+   "cost_usd": null,
+   "llm_calls": null,
+   "errors": [],
+   "critic_rounds": 0,
+   "critic_verdicts": [],
+   "citation_coverage": null,
+   "checks": {
+    "mode": true,
+    "refused": true
+   },
+   "task_success": true,
+   "weights": null,
+   "claude_view": null,
+   "rep": 0
+  },
+  {
+   "id": "focused_debt",
+   "query": "NVDA \u2014 what's their debt situation?",
+   "mode": "focused_question",
+   "latency_s": 0.3,
+   "cost_usd": 0.0038,
+   "llm_calls": 2,
+   "errors": [],
+   "critic_rounds": 0,
+   "critic_verdicts": [],
+   "citation_coverage": 1.0,
+   "checks": {
+    "mode": true,
+    "cited_answer": true,
+    "contains:debt": true
+   },
+   "task_success": true,
+   "weights": null,
+   "claude_view": null,
+   "rep": 0
+  },
+  {
+   "id": "invalid_ticker",
+   "query": "ZZZZ",
+   "error": "CacheMiss: offline and no cache/fixture for snapshot:ZZZZ",
+   "task_success": true,
+   "latency_s": 0.0,
+   "rep": 0
+  },
+  {
+   "id": "rerun_memory",
+   "query": "NVDA",
+   "mode": "full_report",
+   "latency_s": 0.3,
+   "cost_usd": 0.069,
+   "llm_calls": 22,
+   "errors": [],
+   "critic_rounds": 2,
+   "critic_verdicts": [
+    "REJECT",
+    "APPROVE"
+   ],
+   "citation_coverage": 0.938,
+   "checks": {
+    "mode": true,
+    "sections_complete": true,
+    "guard_ok": true,
+    "has_scenarios": true,
+    "bear_case_3": true,
+    "since_last_diff": true
+   },
+   "task_success": true,
+   "weights": {
+    "bear": 0.3,
+    "base": 0.5,
+    "bull": 0.2
+   },
+   "claude_view": 155.16,
+   "rep": 0
+  }
+ ]
+}

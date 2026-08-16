@@ -1,0 +1,25 @@
+# secrets — never commit
+.env
+*.key
+
+# python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# runtime data (caches, memory stores, rag index, generated reports)
+data/
+reports/*.md
+reports/*.pdf
+!reports/.gitkeep
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

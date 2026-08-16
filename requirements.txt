@@ -1,0 +1,10 @@
+anthropic>=0.40
+yfinance>=0.2.50
+edgartools>=3.0
+chromadb>=0.5
+sentence-transformers>=3.0
+praw>=7.7
+python-dotenv>=1.0
+requests>=2.31
+rich>=13.0
+pytest>=8.0

@@ -1,0 +1,8 @@
+{
+ "id": "MSFT_full",
+ "query": "MSFT",
+ "expect": {
+  "mode": "full_report"
+ },
+ "notes": "Second large-cap; Rule of 40 applies (live only)"
+}

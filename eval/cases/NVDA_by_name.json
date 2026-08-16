@@ -1,0 +1,8 @@
+{
+ "id": "NVDA_by_name",
+ "query": "nvidia",
+ "expect": {
+  "mode": "full_report"
+ },
+ "notes": "Company name \u2192 ticker resolution"
+}

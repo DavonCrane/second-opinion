@@ -1,0 +1,8 @@
+{
+ "id": "invalid_ticker",
+ "query": "ZZZZ",
+ "expect": {
+  "error_ok": true
+ },
+ "notes": "Must fail cleanly with a clear message, not a stack trace"
+}

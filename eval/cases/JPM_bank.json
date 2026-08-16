@@ -1,0 +1,11 @@
+{
+ "id": "JPM_bank",
+ "query": "JPM",
+ "expect": {
+  "mode": "full_report",
+  "contains": [
+   "not a recurring-revenue"
+  ]
+ },
+ "notes": "Bank: different filing structure; Rule of 40 must be N/A (live only)"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "loss_making",
+ "query": "RIVN",
+ "expect": {
+  "mode": "full_report",
+  "contains": [
+   "no positive trailing EPS"
+  ]
+ },
+ "notes": "Scenario valuation must decline politely (live only)"
+}

@@ -1,0 +1,49 @@
+{
+ "_ts": 0,
+ "_key": "headlines__NVDA.json",
+ "payload": [
+  {
+   "title": "Nvidia beats on revenue, guides slightly below Street for next quarter",
+   "publisher": "Reuters",
+   "link": "https://example.com/r1",
+   "published": "2026-08-08T20:15:00",
+   "summary": "Data center revenue rose again but the company guided Q3 revenue slightly below consensus estimates."
+  },
+  {
+   "title": "Nvidia pulls forward next-gen platform ship date by one quarter",
+   "publisher": "Company press release",
+   "link": "https://example.com/pr1",
+   "published": "2026-08-11T13:00:00",
+   "summary": "Volume shipments of the next-generation platform will begin one quarter earlier than previously indicated."
+  },
+  {
+   "title": "Hyperscalers raise 2026 capex guidance again",
+   "publisher": "Bloomberg",
+   "link": "https://example.com/b1",
+   "published": "2026-08-05T11:00:00",
+   "summary": "Three of the four largest cloud providers lifted full-year capital expenditure guidance, citing AI infrastructure."
+  },
+  {
+   "title": "Top customer expands in-house AI accelerator deployment",
+   "publisher": "The Information",
+   "link": "https://example.com/i1",
+   "published": "2026-08-09T09:00:00",
+   "summary": "A major cloud customer is deploying its custom accelerator at scale for internal inference workloads."
+  },
+  {
+   "title": "5 stocks to buy before the weekend",
+   "publisher": "Clickbait Daily",
+   "link": "https://example.com/c1",
+   "published": "2026-08-12T15:00:00",
+   "summary": "Listicle."
+  },
+  {
+   "title": "Nvidia shares dip 2% in afternoon trade",
+   "publisher": "MarketWatch",
+   "link": "https://example.com/m1",
+   "published": "2026-08-13T18:00:00",
+   "summary": "Shares fell in a broad market decline."
+  }
+ ],
+ "_note": "FIXTURE \u2014 illustrative data for offline tests/demos, not live market data"
+}

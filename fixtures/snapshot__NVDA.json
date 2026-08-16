@@ -1,0 +1,179 @@
+{
+ "_ts": 0,
+ "_key": "snapshot__NVDA.json",
+ "payload": {
+  "ticker": "NVDA",
+  "name": "NVIDIA Corporation",
+  "sector": "Technology",
+  "industry": "Semiconductors",
+  "summary": "NVIDIA Corporation provides graphics, compute and networking solutions. Its Data Center segment supplies accelerated computing platforms (GPUs, networking, and the CUDA software stack) to cloud service providers, consumer internet companies and enterprises for AI training and inference; the Gaming segment sells GeForce GPUs; Professional Visualization and Automotive are smaller segments.",
+  "price": 128.44,
+  "currency": "USD",
+  "market_cap": 3150000000000.0,
+  "trailing_pe": 44.0,
+  "forward_pe": 31.2,
+  "trailing_eps": 2.92,
+  "forward_eps": 4.12,
+  "revenue_growth_ttm": 0.62,
+  "earnings_growth_ttm": 0.71,
+  "gross_margin_ttm": 0.742,
+  "operating_margin_ttm": 0.581,
+  "free_cash_flow_ttm": 58900000000.0,
+  "total_debt": 9700000000.0,
+  "total_cash": 38000000000.0,
+  "debt_to_equity": 12.9,
+  "beta": 1.7,
+  "analyst": {
+   "recommendation": "buy",
+   "recommendation_mean": 1.6,
+   "n_analysts": 18,
+   "target_low": 100.0,
+   "target_mean": 145.0,
+   "target_high": 200.0,
+   "counts": {
+    "strongBuy": 8,
+    "buy": 6,
+    "hold": 3,
+    "sell": 1,
+    "strongSell": 0
+   }
+  },
+  "statements": {
+   "years": [
+    "2026-01-26",
+    "2025-01-26",
+    "2024-01-28",
+    "2023-01-29"
+   ],
+   "revenue": [
+    211000000000.0,
+    130500000000.0,
+    60900000000.0,
+    27000000000.0
+   ],
+   "gross_profit": [
+    156600000000.0,
+    97900000000.0,
+    44300000000.0,
+    15400000000.0
+   ],
+   "operating_income": [
+    122600000000.0,
+    81500000000.0,
+    33000000000.0,
+    4200000000.0
+   ],
+   "net_income": [
+    105200000000.0,
+    72900000000.0,
+    29800000000.0,
+    4400000000.0
+   ],
+   "ebit": [
+    123000000000.0,
+    82000000000.0,
+    33500000000.0,
+    4500000000.0
+   ],
+   "interest_expense": [
+    -300000000.0,
+    -250000000.0,
+    -260000000.0,
+    -260000000.0
+   ],
+   "diluted_eps": [
+    4.25,
+    2.94,
+    1.19,
+    0.17
+   ],
+   "total_debt": [
+    9700000000.0,
+    10000000000.0,
+    11000000000.0,
+    12000000000.0
+   ],
+   "cash": [
+    38000000000.0,
+    43400000000.0,
+    26000000000.0,
+    13400000000.0
+   ],
+   "equity": [
+    125000000000.0,
+    79300000000.0,
+    43000000000.0,
+    22000000000.0
+   ],
+   "free_cash_flow": [
+    58900000000.0,
+    39800000000.0,
+    27000000000.0,
+    3800000000.0
+   ]
+  },
+  "monthly_closes_5y": [
+   20,
+   21,
+   22,
+   24,
+   23,
+   25,
+   27,
+   26,
+   28,
+   30,
+   29,
+   31,
+   33,
+   32,
+   35,
+   37,
+   40,
+   42,
+   45,
+   47,
+   50,
+   53,
+   58,
+   62,
+   66,
+   70,
+   75,
+   80,
+   88,
+   95,
+   100,
+   108,
+   115,
+   120,
+   118,
+   125,
+   122,
+   128,
+   124,
+   130,
+   127,
+   132,
+   126,
+   129,
+   131,
+   127,
+   125,
+   128,
+   130,
+   126,
+   124,
+   128,
+   131,
+   129,
+   127,
+   130,
+   128,
+   126,
+   129,
+   128
+  ]
+ },
+ "_note": "FIXTURE \u2014 illustrative data for offline tests/demos, not live market data"
+}

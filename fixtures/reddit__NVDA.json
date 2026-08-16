@@ -1,0 +1,583 @@
+{
+ "_ts": 0,
+ "_key": "reddit__NVDA.json",
+ "payload": [
+  {
+   "subreddit": "StockMarket",
+   "id": "p0",
+   "created_utc": 1786700000,
+   "score": 334,
+   "num_comments": 6,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p0"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p1",
+   "created_utc": 1786696400,
+   "score": 188,
+   "num_comments": 74,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p1"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p2",
+   "created_utc": 1786692800,
+   "score": 20,
+   "num_comments": 11,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p2"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p3",
+   "created_utc": 1786689200,
+   "score": 47,
+   "num_comments": 70,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p3"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p4",
+   "created_utc": 1786685600,
+   "score": 486,
+   "num_comments": 28,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p4"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p5",
+   "created_utc": 1786682000,
+   "score": 296,
+   "num_comments": 74,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p5"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p6",
+   "created_utc": 1786678400,
+   "score": 286,
+   "num_comments": 17,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p6"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p7",
+   "created_utc": 1786674800,
+   "score": 293,
+   "num_comments": 39,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p7"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p8",
+   "created_utc": 1786671200,
+   "score": 298,
+   "num_comments": 73,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p8"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p9",
+   "created_utc": 1786667600,
+   "score": 281,
+   "num_comments": 8,
+   "text": "Customers building their own chips, NVDA margins won't hold",
+   "url": "https://reddit.com/r/stocks/p9"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p10",
+   "created_utc": 1786664000,
+   "score": 255,
+   "num_comments": 68,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p10"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p11",
+   "created_utc": 1786660400,
+   "score": 300,
+   "num_comments": 58,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p11"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p12",
+   "created_utc": 1786656800,
+   "score": 358,
+   "num_comments": 31,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p12"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p13",
+   "created_utc": 1786653200,
+   "score": 449,
+   "num_comments": 43,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p13"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p14",
+   "created_utc": 1786649600,
+   "score": 61,
+   "num_comments": 65,
+   "text": "Customers building their own chips, NVDA margins won't hold",
+   "url": "https://reddit.com/r/stocks/p14"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p15",
+   "created_utc": 1786646000,
+   "score": 478,
+   "num_comments": 62,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p15"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p16",
+   "created_utc": 1786642400,
+   "score": 175,
+   "num_comments": 44,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p16"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p17",
+   "created_utc": 1786638800,
+   "score": 36,
+   "num_comments": 11,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p17"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p18",
+   "created_utc": 1786635200,
+   "score": 32,
+   "num_comments": 39,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p18"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p19",
+   "created_utc": 1786631600,
+   "score": 146,
+   "num_comments": 49,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p19"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p20",
+   "created_utc": 1786628000,
+   "score": 482,
+   "num_comments": 59,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p20"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p21",
+   "created_utc": 1786624400,
+   "score": 253,
+   "num_comments": 7,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p21"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p22",
+   "created_utc": 1786620800,
+   "score": 379,
+   "num_comments": 31,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p22"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p23",
+   "created_utc": 1786617200,
+   "score": 86,
+   "num_comments": 57,
+   "text": "NVDA still the best AI play, doubters will regret it",
+   "url": "https://reddit.com/r/stocks/p23"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p24",
+   "created_utc": 1786613600,
+   "score": 420,
+   "num_comments": 55,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p24"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p25",
+   "created_utc": 1786610000,
+   "score": 184,
+   "num_comments": 48,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p25"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p26",
+   "created_utc": 1786606400,
+   "score": 91,
+   "num_comments": 19,
+   "text": "What's the best way to value NVDA right now?",
+   "url": "https://reddit.com/r/stocks/p26"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p27",
+   "created_utc": 1786602800,
+   "score": 249,
+   "num_comments": 75,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p27"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p28",
+   "created_utc": 1786599200,
+   "score": 75,
+   "num_comments": 53,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p28"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p29",
+   "created_utc": 1786595600,
+   "score": 488,
+   "num_comments": 16,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p29"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p30",
+   "created_utc": 1786592000,
+   "score": 234,
+   "num_comments": 71,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p30"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p31",
+   "created_utc": 1786588400,
+   "score": 54,
+   "num_comments": 61,
+   "text": "NVDA still the best AI play, doubters will regret it",
+   "url": "https://reddit.com/r/stocks/p31"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p32",
+   "created_utc": 1786584800,
+   "score": 35,
+   "num_comments": 26,
+   "text": "NVDA at 44x with growth slowing? This is 2000 all over again",
+   "url": "https://reddit.com/r/stocks/p32"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p33",
+   "created_utc": 1786581200,
+   "score": 308,
+   "num_comments": 6,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p33"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p34",
+   "created_utc": 1786577600,
+   "score": 275,
+   "num_comments": 12,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p34"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p35",
+   "created_utc": 1786574000,
+   "score": 37,
+   "num_comments": 26,
+   "text": "NVDA vs AMD for a long term hold, thoughts?",
+   "url": "https://reddit.com/r/stocks/p35"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p36",
+   "created_utc": 1786570400,
+   "score": 490,
+   "num_comments": 44,
+   "text": "NVDA at 44x with growth slowing? This is 2000 all over again",
+   "url": "https://reddit.com/r/stocks/p36"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p37",
+   "created_utc": 1786566800,
+   "score": 60,
+   "num_comments": 62,
+   "text": "Customers building their own chips, NVDA margins won't hold",
+   "url": "https://reddit.com/r/stocks/p37"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p38",
+   "created_utc": 1786563200,
+   "score": 248,
+   "num_comments": 39,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p38"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p39",
+   "created_utc": 1786559600,
+   "score": 380,
+   "num_comments": 33,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p39"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p40",
+   "created_utc": 1786556000,
+   "score": 106,
+   "num_comments": 67,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p40"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p41",
+   "created_utc": 1786552400,
+   "score": 389,
+   "num_comments": 67,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p41"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p42",
+   "created_utc": 1786548800,
+   "score": 266,
+   "num_comments": 46,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p42"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p43",
+   "created_utc": 1786545200,
+   "score": 273,
+   "num_comments": 69,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p43"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p44",
+   "created_utc": 1786541600,
+   "score": 314,
+   "num_comments": 24,
+   "text": "Customers building their own chips, NVDA margins won't hold",
+   "url": "https://reddit.com/r/stocks/p44"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p45",
+   "created_utc": 1786538000,
+   "score": 103,
+   "num_comments": 66,
+   "text": "Customers building their own chips, NVDA margins won't hold",
+   "url": "https://reddit.com/r/stocks/p45"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p46",
+   "created_utc": 1786534400,
+   "score": 405,
+   "num_comments": 35,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p46"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p47",
+   "created_utc": 1786530800,
+   "score": 229,
+   "num_comments": 44,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p47"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p48",
+   "created_utc": 1786527200,
+   "score": 113,
+   "num_comments": 13,
+   "text": "Anyone know when NVDA earnings are?",
+   "url": "https://reddit.com/r/stocks/p48"
+  },
+  {
+   "subreddit": "investing",
+   "id": "p49",
+   "created_utc": 1786523600,
+   "score": 105,
+   "num_comments": 61,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p49"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p50",
+   "created_utc": 1786520000,
+   "score": 246,
+   "num_comments": 44,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p50"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p51",
+   "created_utc": 1786516400,
+   "score": 466,
+   "num_comments": 49,
+   "text": "NVDA at 44x with growth slowing? This is 2000 all over again",
+   "url": "https://reddit.com/r/stocks/p51"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p52",
+   "created_utc": 1786512800,
+   "score": 456,
+   "num_comments": 22,
+   "text": "NVDA at 44x with growth slowing? This is 2000 all over again",
+   "url": "https://reddit.com/r/stocks/p52"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p53",
+   "created_utc": 1786509200,
+   "score": 411,
+   "num_comments": 50,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p53"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p54",
+   "created_utc": 1786505600,
+   "score": 88,
+   "num_comments": 16,
+   "text": "NVDA to the moon after that guidance, loading more calls",
+   "url": "https://reddit.com/r/stocks/p54"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p55",
+   "created_utc": 1786502000,
+   "score": 413,
+   "num_comments": 18,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p55"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p56",
+   "created_utc": 1786498400,
+   "score": 337,
+   "num_comments": 44,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p56"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p57",
+   "created_utc": 1786494800,
+   "score": 11,
+   "num_comments": 1,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p57"
+  },
+  {
+   "subreddit": "stocks",
+   "id": "p58",
+   "created_utc": 1786491200,
+   "score": 270,
+   "num_comments": 17,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p58"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p59",
+   "created_utc": 1786487600,
+   "score": 15,
+   "num_comments": 32,
+   "text": "Data center numbers are insane, holding NVDA forever",
+   "url": "https://reddit.com/r/stocks/p59"
+  },
+  {
+   "subreddit": "wallstreetbets",
+   "id": "p60",
+   "created_utc": 1786484000,
+   "score": 392,
+   "num_comments": 75,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p60"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p61",
+   "created_utc": 1786480400,
+   "score": 428,
+   "num_comments": 16,
+   "text": "Adding to my NVDA position, next-gen chips will crush",
+   "url": "https://reddit.com/r/stocks/p61"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p62",
+   "created_utc": 1786476800,
+   "score": 340,
+   "num_comments": 74,
+   "text": "Bought the dip on NVDA, easiest money",
+   "url": "https://reddit.com/r/stocks/p62"
+  },
+  {
+   "subreddit": "StockMarket",
+   "id": "p63",
+   "created_utc": 1786473200,
+   "score": 424,
+   "num_comments": 64,
+   "text": "Selling half my NVDA, concentration risk is real",
+   "url": "https://reddit.com/r/stocks/p63"
+  }
+ ],
+ "_note": "FIXTURE \u2014 illustrative data for offline tests/demos, not live market data"
+}

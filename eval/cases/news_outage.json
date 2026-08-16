@@ -1,0 +1,11 @@
+{
+ "id": "news_outage",
+ "query": "NVDA",
+ "expect": {
+  "mode": "full_report"
+ },
+ "env": {
+  "FINNHUB_API_KEY": "bad"
+ },
+ "notes": "Graceful degradation when news provider fails (simulate by breaking the key / offline)"
+}

@@ -1,0 +1,11 @@
+{
+ "id": "focused_debt",
+ "query": "NVDA \u2014 what's their debt situation?",
+ "expect": {
+  "mode": "focused_question",
+  "contains": [
+   "debt"
+  ]
+ },
+ "notes": "Router sends to cheap path; answer must be cited"
+}

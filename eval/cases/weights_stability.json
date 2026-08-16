@@ -1,0 +1,8 @@
+{
+ "id": "weights_stability",
+ "query": "NVDA",
+ "expect": {
+  "mode": "full_report"
+ },
+ "notes": "Run with --repeat 5 to measure weight std-dev"
+}

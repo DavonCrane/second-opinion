@@ -1,0 +1,13 @@
+{
+ "id": "NVDA_full",
+ "query": "NVDA",
+ "expect": {
+  "mode": "full_report",
+  "contains": [
+   "Bull case",
+   "Bear case",
+   "Claude's 12-mo view"
+  ]
+ },
+ "notes": "Large-cap tech, full pipeline happy path"
+}

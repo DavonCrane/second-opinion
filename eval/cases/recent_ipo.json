@@ -1,0 +1,8 @@
+{
+ "id": "recent_ipo",
+ "query": "RDDT",
+ "expect": {
+  "mode": "full_report"
+ },
+ "notes": "Thin filing history / possibly no positive EPS \u2192 scenario section must degrade gracefully (live only)"
+}

@@ -1,0 +1,12 @@
+{
+ "id": "rerun_memory",
+ "query": "NVDA",
+ "pre_runs": [
+  "NVDA"
+ ],
+ "expect": {
+  "mode": "full_report",
+  "since_last": true
+ },
+ "notes": "Episodic memory produces since-last-analysis diff"
+}
