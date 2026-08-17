@@ -22,9 +22,16 @@ st.set_page_config(page_title="The Second Opinion", page_icon="📊", layout="wi
 # ---------- styling ------------------------------------------------------------------------------------------
 st.markdown("""
 <style>
-.brand{font-size:26px;font-weight:700;color:#16324f;letter-spacing:.3px}
-.brand span{color:#b5893a}
-.tag{color:#6b7686;font-style:italic;margin-top:-6px}
+.brand{font-size:30px;font-weight:700;color:#16324f;letter-spacing:.6px;line-height:1.1;margin-top:-10px}
+.brand:after{content:"";display:block;width:64px;height:3px;background:#b5893a;border-radius:2px;margin:8px 0 6px}
+.tag{color:#6b7686;font-style:italic;margin-bottom:14px}
+div[data-testid="stTextInput"] input{font-size:16px;padding:12px 14px;border-radius:8px}
+div[data-testid="stButton"] button[kind="primary"]{border-radius:8px;font-weight:600;letter-spacing:.2px}
+h1{font-size:2.0rem !important;color:#16324f !important;letter-spacing:-.2px}
+h2{font-size:1.15rem !important;text-transform:uppercase;letter-spacing:.9px;color:#16324f !important;border-bottom:1px solid #cdd5df;padding-bottom:4px;margin-top:1.4rem !important}
+table{font-size:14px} thead th{color:#6b7686 !important;text-transform:uppercase;font-size:11.5px;letter-spacing:.4px}
+blockquote{background:#eef2f7;border-left:3px solid #b5893a;padding:8px 12px;border-radius:4px}
+[data-testid="stSidebar"] h3{color:#16324f;font-size:1rem;text-transform:uppercase;letter-spacing:.7px}
 .log{background:#101b28;color:#b6c6d8;font-family:Consolas,monospace;font-size:12.5px;border-radius:7px;padding:10px 13px;
      max-height:260px;overflow-y:auto;white-space:pre-wrap}
 .ok{color:#7fc99a}.warn{color:#d4a94e}.bad{color:#e07a6a}
@@ -32,7 +39,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown('<div class="brand">THE SECOND <span>OPINION</span></div>', unsafe_allow_html=True)
+st.markdown('<div class="brand">THE SECOND OPINION</div>', unsafe_allow_html=True)
 st.markdown('<div class="tag">The screener finds them. This does the homework.</div>', unsafe_allow_html=True)
 
 # ---------- sidebar ------------------------------------------------------------------------------------------
@@ -163,18 +170,19 @@ def price_chart(ticker: str, scenarios: dict | None, analyst: dict | None):
     st.markdown(f"**${last:,.2f}** &nbsp; <span style='color:{'#4f9d69' if chg >= 0 else '#c0504d'}'>{chg:+.1f}% over {rng}</span>",
                 unsafe_allow_html=True)
 
+    REF_COLORS = {"bear": "#c0504d", "base": "#5b7db1", "bull": "#4f9d69", "analyst": "#b5893a"}
     refs = []
     if scenarios:
         for r in scenarios.get("rows", []):
-            refs.append({"label": f"{r['name'].title()} ${r['implied_price']:,.0f}", "y": r["implied_price"]})
+            refs.append({"label": f"{r['name'].title()}  ${r['implied_price']:,.0f}", "y": r["implied_price"], "color": REF_COLORS[r["name"]]})
     if analyst and analyst.get("target_mean"):
-        refs.append({"label": f"Analyst mean ${analyst['target_mean']:,.0f}", "y": analyst["target_mean"]})
-    ymin = min([d["close"].min()] + [r["y"] for r in refs]) * 0.97
-    ymax = max([d["close"].max()] + [r["y"] for r in refs]) * 1.03
+        refs.append({"label": f"Analyst mean  ${analyst['target_mean']:,.0f}", "y": analyst["target_mean"], "color": REF_COLORS["analyst"]})
+    ymin = min([d["close"].min()] + [r["y"] for r in refs]) * 0.96
+    ymax = max([d["close"].max()] + [r["y"] for r in refs]) * 1.05
 
     base = alt.Chart(d).encode(x=alt.X("date:T", axis=alt.Axis(title=None, grid=False, labelColor="#8a94a3", tickColor="#cdd5df", domainColor="#cdd5df")))
     line = base.mark_line(color="#4a90d9", strokeWidth=2).encode(
-        y=alt.Y("close:Q", scale=alt.Scale(domain=[ymin, ymax]), axis=alt.Axis(title=None, gridColor="#e6ebf1", gridOpacity=0.35, labelColor="#8a94a3", domainOpacity=0, tickOpacity=0, format="$,.0f")))
+        y=alt.Y("close:Q", scale=alt.Scale(domain=[ymin, ymax]), axis=alt.Axis(title=None, gridColor="#8a94a3", gridOpacity=0.18, labelColor="#8a94a3", domainOpacity=0, tickOpacity=0, format="$,.0f")))
     hover = alt.selection_point(fields=["date"], nearest=True, on="mouseover", empty=False)
     pts = base.mark_circle(size=60, color="#4a90d9").encode(y="close:Q", opacity=alt.condition(hover, alt.value(1), alt.value(0)),
                                                              tooltip=[alt.Tooltip("date:T", title="Date"), alt.Tooltip("close:Q", title="Close", format="$,.2f")]).add_params(hover)
@@ -182,11 +190,13 @@ def price_chart(ticker: str, scenarios: dict | None, analyst: dict | None):
     layers = [line, pts, rule]
     if refs:
         rdf = pd.DataFrame(refs)
-        layers.append(alt.Chart(rdf).mark_rule(color="#8a94a3", strokeDash=[4, 4], strokeWidth=1.2).encode(y="y:Q"))
-        layers.append(alt.Chart(rdf).mark_text(align="left", dx=4, dy=-6, color="#8a94a3", fontSize=11).encode(
-            y="y:Q", text="label:N", x=alt.value(2)))
+        layers.append(alt.Chart(rdf).mark_rule(strokeDash=[6, 4], strokeWidth=2, opacity=0.95).encode(
+            y="y:Q", color=alt.Color("color:N", scale=None), tooltip=[alt.Tooltip("label:N", title="Reference")]))
+        rdf["date"] = d["date"].max()
+        layers.append(alt.Chart(rdf).mark_text(align="right", dx=-2, dy=-9, fontSize=12, fontWeight="bold").encode(
+            x="date:T", y="y:Q", text="label:N", color=alt.Color("color:N", scale=None)))
     st.altair_chart(alt.layer(*layers).properties(height=300).configure_view(strokeOpacity=0), use_container_width=True)
-    st.caption("Dashed lines: 12-month scenario implied prices and analyst mean target — arithmetic on stated assumptions, not forecasts.")
+    st.caption("Dashed lines — bear / base / bull 12-month implied prices and the analyst mean target: arithmetic on stated assumptions, not forecasts.")
 
 
 md = st.session_state.get("report_md")

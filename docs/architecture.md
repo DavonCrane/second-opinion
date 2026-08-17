@@ -180,6 +180,14 @@ analyst-only sentiment, stated in the report), `FINNHUB_API_KEY` (else yfinance 
   manually on three reports.
 - **Concurrency.** Three analysts fan out in parallel; the writer/critic loop is sequential by design.
 
+## 7a. Future work
+- Second retail-sentiment source (X/FinTwit via the paid API, or StockTwits) alongside Reddit; show sources
+  separately and flag when they disagree. `tools/reddit.py` is the template — a sibling tool plugs into the same
+  Sentiment agent.
+- 10-Q ingestion so filing evidence is at most a quarter old; 20-F/40-F support for foreign filers.
+- Rubric-scored critic (quality deltas instead of pass/fail) to make the ablation more sensitive.
+- Deployed dashboard (Streamlit Community Cloud) with a spending cap and access password.
+
 ## 8. Failure log (development + eval), all fixed
 
 1. `temperature` rejected by Claude 5 models (400) → not sent.

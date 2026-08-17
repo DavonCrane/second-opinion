@@ -168,7 +168,9 @@ Return ONE flat JSON object with EXACTLY these eight top-level keys and no other
         if rt.get("available") and rd_src:
             rows.append(row("Retail sentiment (Reddit, 7d)", f"{rt.get('pct_bullish')}% bullish (n={rt.get('n_posts')}, confidence {rt.get('confidence')})", rd_src))
         else:
-            rows.append(row("Retail sentiment", "not available this run (analyst-only)", an_src))
+            why = (rt.get("reason") or "unavailable")
+            why = "Reddit not configured (set REDDIT_CLIENT_ID/SECRET in .env)" if "not configured" in why else why
+            rows.append(row("Retail sentiment", f"{why} — analyst-only", an_src))
 
         bullets = lambda items: "\n".join(f"{i+1}. {b}" for i, b in enumerate(items))
         scen_md = "_Not computed: no positive trailing EPS._"

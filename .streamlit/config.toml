@@ -1,0 +1,14 @@
+# The Second Opinion — dashboard theme (brand navy + gold accent, light surface, matches the PDF export)
+[theme]
+base = "light"
+primaryColor = "#16324f"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f5f8"
+textColor = "#1a2332"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false

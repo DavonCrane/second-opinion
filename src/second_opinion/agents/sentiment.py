@@ -53,7 +53,8 @@ class SentimentAgent(Agent):
         # ---- Retail sentiment (Reddit) classified by FAST model -----------------------------
         posts = reddit_tool.recent_posts(ws.ticker)
         if not posts:
-            ws.facts["retail"] = {"available": False, "reason": "Reddit not configured or unavailable"}
+            from ..config import settings as _s
+            ws.facts["retail"] = {"available": False, "reason": "Reddit not configured" if not _s.reddit_configured else "Reddit unavailable this run"}
             ws.add_finding(self.name, self.section, "Retail (Reddit) sentiment was not available for this run; "
                            "sentiment view relies on analyst consensus only.", s_an)
             ws.note("[sentiment] reddit unavailable -> analyst-only fallback")
