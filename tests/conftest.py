@@ -59,7 +59,7 @@ def scripted_llm() -> FakeLLM:
             ], "business_model": "Full-stack accelerated computing platforms sold to cloud providers and enterprises.",
                 "moat": "CUDA software ecosystem and installed developer base.",
                 "risk_themes": ["customer concentration", "custom silicon substitution", "export controls", "growth deceleration"]})
-        if "Select the 3-5 developments" in p:
+        if "developments that a fundamentals-driven investor" in p:
             ids = [int(x) for x in re.findall(r"\[source (\d+)\]", p)]
             return json.dumps({"findings": [
                 {"claim": "On 2026-08-08 the company beat on revenue but guided next-quarter revenue slightly below consensus.", "sources": ids[:1]},

@@ -86,7 +86,19 @@ macOS/Linux: same steps with `python3.12 -m venv .venv && source .venv/bin/activ
   `REDDIT_CLIENT_SECRET`. Without it, sentiment falls back to analyst consensus only (and the report says so).
 - **Finnhub news:** free key at https://finnhub.io → `FINNHUB_API_KEY`. Without it, yfinance headlines are used.
 
-## Usage
+## Dashboard (optional UI)
+
+```powershell
+streamlit run app.py
+```
+
+Opens a local web page: type a ticker or company name (or a focused question), watch the agents work in a live log,
+read the report, download it as Markdown/HTML/PDF, expand the Risk Critic's verdicts, and ask a follow-up. The
+sidebar's **Risk Critic** toggle is the same switch the eval uses for the ablation; **Research history** is the
+episodic memory. `SO_FAKE_LLM=1 streamlit run app.py` runs a rehearsal with the scripted model and fixture data
+(no key, no network) — handy for demos.
+
+## Usage (CLI)
 
 ```powershell
 python -m second_opinion NVDA                                   # full report
@@ -112,6 +124,7 @@ way so results are reproducible. **Fixture numbers are illustrative, not live ma
 ```
 second-opinion/
 ├── README.md                    this file
+├── app.py                       Streamlit dashboard (optional UI over the same orchestrator)
 ├── .env.example                 secrets template (placeholders only)
 ├── pyproject.toml / requirements.txt
 ├── src/second_opinion/
@@ -136,7 +149,7 @@ second-opinion/
 ## Tests
 
 ```powershell
-pytest            # 26 tests: calculator math, guardrails, router, cache, memory, RAG, full pipeline e2e, ablation
+pytest            # 27 tests: calculator math, guardrails, router, cache, memory, RAG, full pipeline e2e, ablation
 ```
 
 ## Evaluation

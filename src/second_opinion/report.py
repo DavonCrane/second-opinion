@@ -12,14 +12,14 @@ import tempfile
 from pathlib import Path
 
 _CSS = """
-body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;color:#1a2332;font-size:9.2pt;line-height:1.4;padding:.45in .55in}
+body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;color:#1a2332;font-size:9.2pt;line-height:1.4;padding:.45in .55in;max-width:8.5in;margin:0 auto}
 h1{font-size:15pt;color:#16324f;border-bottom:2.5px solid #16324f;padding-bottom:4px;margin:0 0 6px}
 h2{font-size:8.8pt;text-transform:uppercase;letter-spacing:.8px;color:#16324f;border-bottom:1px solid #cdd5df;padding-bottom:2px;margin:9px 0 4px}
 table{width:100%;border-collapse:collapse;margin:3px 0}th{font-size:7.2pt;text-transform:uppercase;color:#6b7686;text-align:left;padding:2px 5px;border-bottom:1px solid #cdd5df}
 td{padding:2.3px 5px;border-bottom:.5px solid #e6ebf1;vertical-align:top}blockquote{background:#eef2f7;border:1px solid #cdd5df;border-radius:3px;padding:5px 9px;margin:5px 0}
 ol,ul{margin:2px 0 2px 16px;padding:0}li{margin:0 0 2px}p{margin:2px 0}em{color:#5a6472}hr{border:0;border-top:1px solid #cdd5df;margin:8px 0}
-.brand{display:flex;justify-content:space-between;border-bottom:2.5px solid #16324f;margin-bottom:6px;font-weight:700;color:#16324f;font-size:12pt}
-.brand span{color:#b5893a}.brand i{font-weight:400;font-size:7.5pt;color:#6b7686}
+.brand{text-align:center;border-bottom:2.5px solid #16324f;margin-bottom:8px;padding-bottom:4px;font-weight:700;color:#16324f;font-size:14pt;letter-spacing:.5px}
+.brand i{display:block;font-weight:400;font-size:7.5pt;color:#6b7686;letter-spacing:0;margin-top:1px}
 """
 
 
@@ -63,7 +63,8 @@ def _md_to_html(md: str) -> str:
         elif re.match(r"^\d+\. ", line):
             if in_list != "ol":
                 close_list(); out.append("<ol>"); in_list = "ol"
-            out.append(f"<li>{inline(re.sub(r'^\d+\. ', '', line))}</li>")
+            item_text = re.sub(r"^\d+\. ", "", line)
+            out.append(f"<li>{inline(item_text)}</li>")
         elif line.startswith(("- ", "* ")):
             if in_list != "ul":
                 close_list(); out.append("<ul>"); in_list = "ul"
@@ -78,7 +79,7 @@ def _md_to_html(md: str) -> str:
 
 def to_html(md: str) -> str:
     return (f"<!DOCTYPE html><html><head><meta charset='utf-8'><style>{_CSS}</style></head><body>"
-            f"<div class='brand'>THE SECOND<span>&nbsp;OPINION</span><i>The screener finds them. This does the homework.</i></div>"
+            f"<div class='brand'>THE SECOND OPINION<i>The screener finds them. This does the homework.</i></div>"
             f"{_md_to_html(md)}</body></html>")
 
 

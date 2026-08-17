@@ -152,3 +152,17 @@ def headlines(ticker: str, limit: int = 15) -> list[dict[str, Any]]:
         return out
 
     return cache.cached("headlines", ticker, fetch, max_age_s=2 * 3600)
+
+
+def price_history(ticker: str, period: str = "5y") -> list[dict[str, Any]]:
+    """Daily closes as [{"date": "YYYY-MM-DD", "close": float}], oldest first. Cached 6h."""
+    ticker = ticker.upper()
+
+    def fetch():
+        import yfinance as yf
+        hist = yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=True)
+        if hist is None or hist.empty:
+            raise ValueError(f"No price history for {ticker}")
+        return [{"date": str(idx)[:10], "close": round(float(c), 4)} for idx, c in hist["Close"].items() if c == c]
+
+    return cache.cached("prices", f"{ticker}_{period}", fetch, max_age_s=6 * 3600)
