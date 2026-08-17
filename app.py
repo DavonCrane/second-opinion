@@ -9,15 +9,38 @@ same switch the eval uses for the ablation.
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 import streamlit as st
 
-from second_opinion.config import settings
+# ---- cloud bootstrap: make `src/` importable without `pip install -e .`, and map Streamlit secrets -> env vars
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+try:
+    for _k, _v in st.secrets.items():
+        if isinstance(_v, (str, int, float)) and _k not in os.environ:
+            os.environ[_k] = str(_v)
+except Exception:  # noqa: BLE001 — no secrets file locally is normal
+    pass
+
+from second_opinion.config import settings  # noqa: E402
 from second_opinion.memory import EpisodicMemory
 from second_opinion.report import export_pdf, to_html
 
 st.set_page_config(page_title="The Second Opinion", page_icon="📊", layout="wide")
+
+# ---- optional password gate (set APP_PASSWORD in Streamlit secrets / .env to enable) ---------------------------
+_pw = os.getenv("APP_PASSWORD", "")
+if _pw and not st.session_state.get("_authed"):
+    st.markdown("### The Second Opinion")
+    st.caption("This deployment is private. Enter the access password to continue.")
+    given = st.text_input("Password", type="password")
+    if given and given == _pw:
+        st.session_state["_authed"] = True
+        st.rerun()
+    elif given:
+        st.error("Incorrect password.")
+    st.stop()
 
 # ---------- styling ------------------------------------------------------------------------------------------
 st.markdown("""

@@ -1,6 +1,7 @@
 # secrets — never commit
 .env
 *.key
+.streamlit/secrets.toml
 
 # personal study notes — never pushed
 NOTES.md

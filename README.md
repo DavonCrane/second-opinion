@@ -65,8 +65,8 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 #   (if PowerShell blocks scripts: Set-ExecutionPolicy -Scope CurrentUser RemoteSigned, then retry)
 
-# 3. install
-pip install -e .
+# 3. install  (the [rag] extra adds ChromaDB + MiniLM embeddings; without it a TF-IDF retriever is used)
+pip install -e ".[rag]"
 
 # 4. secrets — copy the template and edit it (never commit .env)
 copy .env.example .env
@@ -97,6 +97,25 @@ read the report, download it as Markdown/HTML/PDF, expand the Risk Critic's verd
 sidebar's **Risk Critic** toggle is the same switch the eval uses for the ablation; **Research history** is the
 episodic memory. `SO_FAKE_LLM=1 streamlit run app.py` runs a rehearsal with the scripted model and fixture data
 (no key, no network) — handy for demos.
+
+### Deploying the dashboard as a live web page (Streamlit Community Cloud)
+
+1. Push the repo to GitHub (public). 2. Go to https://share.streamlit.io → **New app** → pick the repo, branch `main`,
+main file `app.py`. 3. In **Advanced settings → Secrets**, paste:
+```toml
+ANTHROPIC_API_KEY = "sk-ant-..."
+EDGAR_IDENTITY = "Your Name you@example.com"
+APP_PASSWORD = "choose-a-password"     # optional but recommended: visitors must enter it; every run bills your key
+# optional
+REDDIT_CLIENT_ID = ""
+REDDIT_CLIENT_SECRET = ""
+REDDIT_USER_AGENT = "second-opinion/0.1 by your_reddit_username"
+FINNHUB_API_KEY = ""
+```
+4. Deploy. The cloud build uses `requirements.txt` (no ChromaDB — the TF-IDF retriever runs instead, which fits the
+free tier's memory). Cold start ~1 min; the first run on a ticker fetches its 10-K. Set a monthly spend limit on your
+Anthropic account before sharing the URL. `app.py` reads secrets into environment variables at startup, so the same
+code runs locally (from `.env`) and in the cloud (from Secrets).
 
 ## Usage (CLI)
 

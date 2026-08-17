@@ -12,6 +12,10 @@ dynamic = ["dependencies"]
 [project.scripts]
 second-opinion = "second_opinion.__main__:main"
 
+[project.optional-dependencies]
+# Dense-vector RAG (ChromaDB + MiniLM). Without it the pipeline uses the built-in TF-IDF retriever automatically.
+rag = ["chromadb>=0.5", "sentence-transformers>=3.0"]
+
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
 
