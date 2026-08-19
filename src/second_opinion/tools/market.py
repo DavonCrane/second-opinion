@@ -10,6 +10,27 @@ from typing import Any
 from .. import cache
 
 
+def _retry_yf(fn, tries: int = 3, base_sleep: float = 12.0):
+    """Yahoo rate-limits shared/cloud IPs aggressively. Retry with backoff before giving up.
+
+    Keeps the caller's exception on final failure so upstream error handling is unchanged.
+    """
+    import time
+    last = None
+    for i in range(tries):
+        try:
+            return fn()
+        except Exception as e:  # noqa: BLE001 — yfinance raises provider-specific classes; match by name
+            last = e
+            name = type(e).__name__
+            if "RateLimit" in name or "429" in str(e) or "Too Many Requests" in str(e):
+                if i < tries - 1:
+                    time.sleep(base_sleep * (i + 1))
+                    continue
+            raise
+    raise last
+
+
 def _clean(v: Any) -> Any:
     """Convert numpy/pandas scalars & NaN to JSON-safe python values."""
     try:
@@ -50,7 +71,7 @@ def resolve_ticker(query: str) -> str:
 
     def fetch():
         import yfinance as yf
-        res = yf.Search(q, max_results=5)
+        res = _retry_yf(lambda: yf.Search(q, max_results=5))
         quotes = [x for x in res.quotes if x.get("quoteType") == "EQUITY"]
         if not quotes:
             raise ValueError(f"No equity found for '{query}'")
@@ -66,7 +87,7 @@ def snapshot(ticker: str) -> dict[str, Any]:
     def fetch():
         import yfinance as yf
         t = yf.Ticker(ticker)
-        info = t.info or {}
+        info = _retry_yf(lambda: t.info) or {}
         if not info or info.get("regularMarketPrice") is None and info.get("currentPrice") is None:
             raise ValueError(f"No market data for ticker '{ticker}' — is it valid and listed?")
         inc, bs, cf = t.income_stmt, t.balance_sheet, t.cashflow
@@ -138,7 +159,7 @@ def headlines(ticker: str, limit: int = 15) -> list[dict[str, Any]]:
 
     def fetch():
         import yfinance as yf
-        items = yf.Ticker(ticker).news or []
+        items = _retry_yf(lambda: yf.Ticker(ticker).news) or []
         out = []
         for it in items[:limit]:
             c = it.get("content", it)  # yfinance >=0.2.5x nests under 'content'
@@ -160,7 +181,7 @@ def price_history(ticker: str, period: str = "5y") -> list[dict[str, Any]]:
 
     def fetch():
         import yfinance as yf
-        hist = yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=True)
+        hist = _retry_yf(lambda: yf.Ticker(ticker).history(period=period, interval="1d", auto_adjust=True))
         if hist is None or hist.empty:
             raise ValueError(f"No price history for {ticker}")
         return [{"date": str(idx)[:10], "close": round(float(c), 4)} for idx, c in hist["Close"].items() if c == c]
