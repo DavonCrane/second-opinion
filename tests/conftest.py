@@ -30,7 +30,7 @@ def scripted_llm() -> FakeLLM:
 
     def fn(prompt: str, tier: str) -> str:
         p = prompt
-        if "Classify each Reddit post" in p:
+        if "Classify each post's stance" in p:
             n = len(re.findall(r"^\d+\. ", p, re.M))
             labels = []
             for line in p.splitlines():

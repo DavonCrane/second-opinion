@@ -165,11 +165,17 @@ Return ONE flat JSON object with EXACTLY these eight top-level keys and no other
         if an.get("score_0_10") is not None:
             tgt = f" · target ${an.get('target_mean'):.2f} ({an['target_upside_pct']:+.0f}%)" if an.get("target_upside_pct") is not None else ""
             rows.append(row("Analyst consensus", f"{(an.get('recommendation') or '').replace('_',' ').title()} {an['score_0_10']}/10 (n={an.get('n_analysts')}){tgt}", an_src))
-        if rt.get("available") and rd_src:
-            rows.append(row("Retail sentiment (Reddit, 7d)", f"{rt.get('pct_bullish')}% bullish (n={rt.get('n_posts')}, confidence {rt.get('confidence')})", rd_src))
+        if rt.get("available"):
+            srcs = rt.get("sources") or {}
+            parts, ids = [], []
+            for key, label in (("stocktwits", "StockTwits"), ("reddit", "Reddit")):
+                if key in srcs:
+                    parts.append(f"{label} {srcs[key]['pct_bullish']}% bullish (n={srcs[key]['n_posts']})")
+                    ids.append(srcs[key].get("source_id"))
+            ids = [i for i in ids if i] or [an_src]
+            rows.append(f"| Retail sentiment (7d) | {' · '.join(parts)} · confidence {rt.get('confidence')} | {''.join(f'[{i}]' for i in ids)} |")
         else:
             why = (rt.get("reason") or "unavailable")
-            why = "Reddit not configured (set REDDIT_CLIENT_ID/SECRET in .env)" if "not configured" in why else why
             rows.append(row("Retail sentiment", f"{why} — analyst-only", an_src))
 
         bullets = lambda items: "\n".join(f"{i+1}. {b}" for i, b in enumerate(items))
@@ -219,11 +225,18 @@ Return ONE flat JSON object with EXACTLY these eight top-level keys and no other
 {p.get('since_last','')}
 
 ## Sources
-{ws.sources_text()}
+@@SOURCES@@
 
 ---
 {DISCLAIMER}
 """
         if ws.errors:
             md += "\n_Data-quality notes: " + "; ".join(ws.errors) + "_\n"
+        # Sources: list only what the report actually cites (retrieved-but-unused headlines are omitted; numbering is kept stable)
+        import re as _re
+        body = md.split("## Sources")[0]
+        cited = {int(n) for n in _re.findall(r"\[(\d+)\]", body)}
+        lines = [f"[{s_['id']}] {s_['label']}" + (f" — {s_['url']}" if s_.get("url") else "")
+                 for s_ in ws.sources if s_["id"] in cited]
+        md = md.replace("@@SOURCES@@", "\n".join(lines) if lines else ws.sources_text())
         return md

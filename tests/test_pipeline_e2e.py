@@ -29,7 +29,7 @@ def test_full_report_end_to_end(llm, memories):
     assert sc["weights"] == {"bear": 0.3, "base": 0.5, "bull": 0.2} and sc["tilt"] == 0.05
     # sentiment: analyst score computed + reddit classified
     assert ws.facts["analyst"]["score_0_10"] == 7.9
-    assert ws.facts["retail"]["available"] and ws.facts["retail"]["n_posts"] == 64
+    assert ws.facts["retail"]["available"] and ws.facts["retail"]["n_posts"] >= 64 and "reddit" in ws.facts["retail"]["sources"]
     # critic rejected the vague bear bullet then approved the revision (reflection loop)
     verdicts = [c["verdict"] for c in ws.critiques]
     assert verdicts == ["REJECT", "APPROVE"]

@@ -39,7 +39,7 @@ analyses (episodic + semantic memory); (5) arithmetic done by code from stated a
    │ Fundamentals   │      │ News           │      │ Sentiment        │
    │ 10-K RAG (Item │      │ headlines →    │      │ analyst consensus│
    │ 1/1A/7) +      │      │ relevance      │      │ (yfinance) +     │
-   │ statements via │      │ filter, dated  │      │ Reddit posts →   │
+   │ statements via │      │ filter, dated  │      │ StockTwits/Reddit│
    │ calculator     │      │ findings       │      │ Haiku classifier │
    └───────┬────────┘      └───────┬────────┘      └────────┬─────────┘
            └────────────────────────┼────────────────────────┘
@@ -77,7 +77,7 @@ analyses (episodic + semantic memory); (5) arithmetic done by code from stated a
 | Guardrails | `guardrails.py` | Input guard (advice refusal), output guard (citation coverage, dangling `[n]`, promissory phrasing, disclaimer), weight guard (tilt > 0.20 needs critic sign-off), citation normalisation |
 | LLM wrapper | `llm.py` | Two tiers (`claude-sonnet-5` / `claude-haiku-4-5`), retries with backoff, robust JSON (cheap repairs + fast-model repair pass), token/cost ledger, `FakeLLM` for tests |
 | Cache | `cache.py` | Every tool call cached to `data/cache/`; `SO_OFFLINE=1` serves cache/fixtures only; fixtures **never** served online |
-| Tools | `tools/market.py`, `edgar.py`, `news.py`, `reddit.py`, `calculator.py` | yfinance (price, statements, analyst consensus, headlines), SEC EDGAR 10-K sections, Finnhub/yfinance news, Reddit via PRAW, pure-function financial math |
+| Tools | `tools/market.py`, `edgar.py`, `news.py`, `stocktwits.py`, `reddit.py`, `calculator.py` | yfinance (price, statements, analyst consensus, headlines), SEC EDGAR 10-K sections, Finnhub/yfinance news, StockTwits public stream (user-declared Bullish/Bearish labels), Reddit via PRAW (optional), pure-function financial math |
 | Agents | `agents/fundamentals.py`, `news.py`, `sentiment.py`, `valuation.py`, `writer.py`, `critic.py` | Each `run(workspace)`; analysts write cited `Finding`s; writer renders the fixed template; critic returns APPROVE/REJECT with actionable issues |
 | Memory | `memory/workspace.py`, `episodic.py`, `semantic.py` | Working (per-run blackboard), episodic (per-ticker run log → "since last analysis"), semantic (durable company facts read at start, updated at end) |
 | RAG | `rag/index.py` | Chunk 10-K Items 1/1A/7 (220 words, 40 overlap) → ChromaDB + all-MiniLM-L6-v2 (TF-IDF fallback) → retrieve top-k, cite `Item 1A ¶7`; chunk IDs namespaced by filing period+hash, retrieval scoped to the current filing |
@@ -90,7 +90,7 @@ analyses (episodic + semantic memory); (5) arithmetic done by code from stated a
 |---|---|---|---|---|
 | 1 | **Routing + parallelization** | `router.py`; `orchestrator.py` ThreadPool fan-out of three analysts | A bare ticker and "what's their debt situation?" need different workflows; the cheap path costs 9 ¢ / 22 s vs $0.11 / 60 s. Analysts are independent, so parallel fan-out is free wall-clock savings | `test_router_heuristics`, `test_focused_question_is_routed_and_cited` |
 | 2 | **Reflection / self-critique** | `agents/critic.py` + writer revision loop, ≤ 2 rounds | The single highest-leverage quality lever for LLM-written research; also the eval ablation. See §5.4 for what the ablation actually showed | `test_full_report_end_to_end` (REJECT→APPROVE), `test_ablation_without_critic` |
-| 3 | **Tool use (5 tools)** | `tools/` | The system must act on *live* data, not training data; every tool is cached and degrades gracefully | `test_cache_serves_fixture_offline_and_raises_on_miss`, `test_graceful_degradation_when_a_tool_fails` |
+| 3 | **Tool use (6 tools)** | `tools/` | The system must act on *live* data, not training data; every tool is cached and degrades gracefully | `test_cache_serves_fixture_offline_and_raises_on_miss`, `test_graceful_degradation_when_a_tool_fails` |
 | 4 | **Multi-agent with handoffs** | 6 agents over the shared workspace | Specialist prompts beat one mega-prompt; the workspace makes handoffs explicit (numbered sources, typed findings) and inspectable | `test_full_report_end_to_end` |
 | 5 | **Memory (3 types)** | working / episodic / semantic | Re-researching a ticker should recall prior findings and *show what changed*; durable facts (sector, moat, risk themes) shouldn't be re-derived every run | `test_episodic_memory_diff`, `test_semantic_memory_accumulates_risk_themes`, `test_rerun_produces_since_last_analysis_diff` |
 | 6 | **RAG with citations** | `rag/index.py` over 10-K Items 1/1A/7 | Grounds the fundamentals narrative in the primary source; paragraph-level citations make hallucination measurable | `test_rag_chunks_and_retrieves_with_citations` |
@@ -171,8 +171,8 @@ analyst-only sentiment, stated in the report), `FINNHUB_API_KEY` (else yfinance 
 - **Data providers.** yfinance headlines are generic without a Finnhub key (the news agent is instructed not to
   stretch relevance); `totalCash` excludes marketable securities (fixed by using the cash + short-term investments
   line); analyst consensus counts depend on yfinance coverage.
-- **Sentiment.** Reddit sample sizes can be small; confidence is reported; without credentials the system runs
-  analyst-only and says so.
+- **Sentiment.** StockTwits is an unofficial public endpoint and may change; Reddit needs credentials; sample sizes can be
+  small (confidence is reported). With no retail source reachable the system runs analyst-only and says so.
 - **Weights and view.** Measured for stability and evidence-linkage, not validated as forecasts; the weighted view
   inherits variance from scenario EPS assumptions (±6 % over 5 runs).
 - **Critic.** Binary verdict; a rubric score would let the ablation measure quality deltas.
@@ -181,9 +181,9 @@ analyst-only sentiment, stated in the report), `FINNHUB_API_KEY` (else yfinance 
 - **Concurrency.** Three analysts fan out in parallel; the writer/critic loop is sequential by design.
 
 ## 7a. Future work
-- Second retail-sentiment source (X/FinTwit via the paid API, or StockTwits) alongside Reddit; show sources
-  separately and flag when they disagree. `tools/reddit.py` is the template — a sibling tool plugs into the same
-  Sentiment agent.
+- X/FinTwit as a third retail-sentiment source (paid API) alongside StockTwits and Reddit. `tools/stocktwits.py`
+  is the template — a sibling tool plugs into the same Sentiment agent, which already reports sources separately and
+  flags when they disagree.
 - 10-Q ingestion so filing evidence is at most a quarter old; 20-F/40-F support for foreign filers.
 - Rubric-scored critic (quality deltas instead of pass/fail) to make the ablation more sensitive.
 - Deployed dashboard (Streamlit Community Cloud) with a spending cap and access password.

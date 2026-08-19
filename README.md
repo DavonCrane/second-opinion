@@ -21,7 +21,7 @@ python -m second_opinion NVDA
 1. **Guardrails** check the request (advice-seeking prompts like "should I buy?" are refused with a redirect).
 2. A **router** classifies it: full report vs. focused question (`"NVDA — what's their debt situation?"`).
 3. Three **analyst agents run in parallel** — Fundamentals (10-K RAG + statements), News, Sentiment (analyst
-   consensus + Reddit posts classified by a fast model) — writing cited findings to a **shared workspace**.
+   consensus + StockTwits/Reddit posts classified by a fast model) — writing cited findings to a **shared workspace**.
 4. The **Valuation agent** builds bear/base/bull scenarios (calculator does the math; multiples from the stock's own
    P/E history) and assigns evidence-weighted probabilities from a neutral 25/50/25 prior.
 5. The **Writer** assembles the report; the **Risk Critic** attacks it (weak bear case? uncited numbers? unjustified
@@ -37,7 +37,7 @@ Everything is observable: the CLI streams the agent log live.
 |---|---|---|
 | 1 | Routing + parallelization | `router.py`; `orchestrator.py` thread-pool fan-out |
 | 2 | Reflection / self-critique | `agents/critic.py` + writer revision loop (also the eval ablation) |
-| 3 | Tool use (5 tools) | `tools/` — yfinance, SEC EDGAR, news, Reddit, calculator |
+| 3 | Tool use (6 tools) | `tools/` — yfinance, SEC EDGAR, news, StockTwits, Reddit, calculator |
 | 4 | Multi-agent with handoffs | 6 agents over a shared workspace (`memory/workspace.py`) |
 | 5 | Memory (3 types) | working (workspace), episodic (`memory/episodic.py`), semantic (`memory/semantic.py`) |
 | 6 | RAG with citations | `rag/index.py` over 10-K Items 1 / 1A / 7 |
@@ -82,8 +82,10 @@ python -m second_opinion NVDA
 macOS/Linux: same steps with `python3.12 -m venv .venv && source .venv/bin/activate` and `cp .env.example .env`.
 
 ### Optional providers
-- **Reddit retail sentiment:** create a "script" app at https://www.reddit.com/prefs/apps and fill `REDDIT_CLIENT_ID` /
-  `REDDIT_CLIENT_SECRET`. Without it, sentiment falls back to analyst consensus only (and the report says so).
+- **Retail sentiment** comes from the public StockTwits symbol stream by default (no key needed; user-declared
+  Bullish/Bearish labels are kept, the rest is classified by the fast model). **Reddit** is an optional second source:
+  create a "script" app at https://www.reddit.com/prefs/apps and fill `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET`.
+  If no retail source is reachable, sentiment falls back to analyst consensus only (and the report says so).
 - **Finnhub news:** free key at https://finnhub.io → `FINNHUB_API_KEY`. Without it, yfinance headlines are used.
 
 ## Dashboard (optional UI)
@@ -155,7 +157,7 @@ second-opinion/
 │   ├── cache.py                 disk cache / fixtures / offline mode
 │   ├── report.py                markdown → styled HTML/PDF export
 │   ├── agents/                  fundamentals, news, sentiment, valuation, writer, critic
-│   ├── tools/                   market (yfinance), edgar, news, reddit, calculator
+│   ├── tools/                   market (yfinance), edgar, news, stocktwits, reddit, calculator
 │   ├── memory/                  workspace (working), episodic, semantic
 │   └── rag/                     10-K chunking + retrieval (Chroma/MiniLM, TF-IDF fallback)
 ├── tests/                       pytest suite (offline; end-to-end pipeline test included)
