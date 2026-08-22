@@ -84,7 +84,7 @@ Task 1 — propose EPS growth for the next 12 months under three scenarios. Base
 Task 2 — assign probability weights to the three scenarios. START from the neutral prior bear 0.25 / base 0.50 / bull 0.25. Move weight ONLY where specific evidence justifies it, and explain each move in one sentence citing sources. Keep total tilt modest (max any single weight moves: 0.20) unless the evidence is extreme.
 JSON: {{"scenarios": {{"bear": {{"eps_growth_pct": n, "rationale": "...", "sources": [ids]}}, "base": {{...}}, "bull": {{...}}}},
         "weights": {{"bear": 0.xx, "base": 0.xx, "bull": 0.xx}}, "weight_rationale": "one or two sentences with citations"}}"""
-        out = self.llm.complete_json(prompt, system=ANALYST_SYSTEM, tier="strong", max_tokens=900)
+        out = self.llm.complete_json(prompt, system=ANALYST_SYSTEM, tier="strong", max_tokens=1200)
         sc_in = out.get("scenarios", {})
         scenarios = []
         growth: dict[str, float] = {}
@@ -104,7 +104,9 @@ JSON: {{"scenarios": {{"bear": {{"eps_growth_pct": n, "rationale": "...", "sourc
                        "bull": "Demand upside surprises and the premium multiple holds"}
         for name in ("bear", "base", "bull"):
             s = sc_in.get(name, {})
-            rat = str(s.get("rationale") or s.get("what_has_to_be_true") or "").strip() or default_rat[name]
+            rat = str(s.get("rationale") or s.get("what_has_to_be_true") or "").strip()
+            if len(rat) < 15:  # empty OR a truncated stub (e.g. "Mult") — fall back to a complete sentence
+                rat = default_rat[name]
             scenarios.append(calc.Scenario(name, growth[name], bands[name], rat))
         results = calc.scenario_table(eps, price, scenarios)
         weights = calc.normalize_weights(out.get("weights") or calc.NEUTRAL_WEIGHTS)
